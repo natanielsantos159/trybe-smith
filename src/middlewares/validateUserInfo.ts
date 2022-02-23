@@ -1,6 +1,6 @@
 import Joi, { ValidationError } from 'joi';
 import { Request, Response, NextFunction } from 'express';
-import { User } from '../interfaces';
+import User from '../interfaces/User';
 
 const schema = Joi.object({
   username: Joi.string().min(3).required().messages({
@@ -35,6 +35,7 @@ const validateUserInfo = async (
   
   try {
     await schema.validateAsync(userInfo, { convert: false });
+    next();
   } catch (err: ValidationError | unknown) {
     if (err instanceof ValidationError && typeof err.details[0].path[0] === 'string') {
       const { type } = err.details[0];
@@ -43,8 +44,6 @@ const validateUserInfo = async (
       res.status(getErrorCode(type)).json({ error: newMessage });
     }
   }
-
-  next();
 };
 
 export default validateUserInfo;
