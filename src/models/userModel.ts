@@ -9,6 +9,17 @@ const create = async (userInfo: User) => {
       (?, ?, ?, ?)`, [username, classe, level, password]);
 };
 
+const login = async ({ username, password }: User) => {
+  const [rows] = await connection.execute(
+    `
+  SELECT * FROM Trybesmith.Users
+  WHERE username = ? AND password = ?`,
+    [username, password],
+  );
+  if (rows instanceof Array && rows.length === 0) throw new Error('Username or password invalid');
+};
+
 export default {
   create,
+  login,
 };
