@@ -11,10 +11,8 @@ const schema = Joi.object({
     .messages({
       'string.min': '{{#label}} must be longer than 2 characters',
     }),
-  level: Joi.number().min(1).label('Level').required()
-    .messages({
-      'number.min': '{{#label}} must be greater than 0',
-    }),
+  level: Joi.number().strict().greater(0).label('Level')
+    .required(),
   password: Joi.string().min(8).label('Password').required()
     .messages({
       'string.min': '{{#label}} must be longer than 7 characters',
@@ -31,7 +29,7 @@ const validateUserInfo = async (
   const userInfo: User = req.body;
   
   try {
-    await schema.validateAsync(userInfo, { errors: { wrap: { label: false }}, convert: false  });
+    await schema.validateAsync(userInfo, { errors: { wrap: { label: false } } });
     next();
   } catch (err: ValidationError | unknown) {
     if (err instanceof ValidationError) {
