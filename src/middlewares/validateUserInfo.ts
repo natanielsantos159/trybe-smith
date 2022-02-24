@@ -31,12 +31,12 @@ const validateUserInfo = async (
   const userInfo: User = req.body;
   
   try {
-    await schema.validateAsync(userInfo, { convert: false });
+    await schema.validateAsync(userInfo, { errors: { wrap: { label: false }}, convert: false  });
     next();
   } catch (err: ValidationError | unknown) {
     if (err instanceof ValidationError) {
       const { type } = err.details[0];
-      res.status(getErrorCode(type)).json({ error: err.message.replace(/"/g, '') });
+      res.status(getErrorCode(type)).json({ error: err.message });
     }
   }
 };

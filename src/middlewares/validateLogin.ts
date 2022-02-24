@@ -10,12 +10,11 @@ const validateLogin = async (req: Request, res: Response, next: NextFunction) =>
   const userInfo = req.body;
 
   try {
-    await loginSchema.validateAsync(userInfo);
+    await loginSchema.validateAsync(userInfo, { errors: { wrap: { label: false } } });
     next();
   } catch (err: ValidationError | unknown) {
     if (err instanceof ValidationError) {
-      return res.status(400).json({
-        error: err.message.replace(/"/g, '') });
+      return res.status(400).json({ error: err.message });
     }
   }
 };
