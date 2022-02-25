@@ -13,6 +13,13 @@ const create = async ({ name, amount }: Product): Promise<Product> => {
   };
 };
 
+const getAll = async () => {
+  const [rows] = await connection
+    .execute('SELECT * FROM Trybesmith.Products') as [Product[], FieldPacket[]];
+  return rows;
+};
+
 export default {
   create,
+  getAll,
 };
