@@ -1,3 +1,4 @@
+import { FieldPacket } from 'mysql';
 import User from '../interfaces/User';
 import connection from './connection';
 
@@ -19,7 +20,18 @@ const login = async ({ username, password }: User) => {
   if (rows instanceof Array && rows.length === 0) throw new Error('Username or password invalid');
 };
 
+const getByUsername = async (username: string) => {
+  const [rows] = await connection
+    .execute(
+      'SELECT * FROM Trybesmith.Users WHERE username = ?', 
+      [username],
+    ) as [User[], FieldPacket[]];
+
+  return rows[0];
+};
+
 export default {
   create,
   login,
+  getByUsername,
 };
