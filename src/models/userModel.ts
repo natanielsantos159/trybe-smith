@@ -1,4 +1,4 @@
-import { FieldPacket } from 'mysql';
+import { FieldPacket } from 'mysql2';
 import User from '../interfaces/User';
 import connection from './connection';
 
