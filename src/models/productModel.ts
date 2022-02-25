@@ -19,7 +19,16 @@ const getAll = async () => {
   return rows;
 };
 
+const updateProductOrder = async (productId: number, orderId: number) => {
+  await connection
+    .execute(
+      'UPDATE Trybesmith.Products SET orderId = ? WHERE id = ?', 
+      [orderId, productId],
+    ) as [ResultSetHeader, FieldPacket[]];
+};
+
 export default {
   create,
   getAll,
+  updateProductOrder,
 };
