@@ -1,3 +1,4 @@
+import Order from '../interfaces/Order';
 import orderModel from '../models/orderModel';
 import productModel from '../models/productModel';
 
@@ -16,7 +17,21 @@ const getById = async (orderId: number) => {
   return { id: orderId, userId: order.userId, products: productsIds };
 };
 
+const getAll = async () => {
+  const orders: Order[] = await orderModel.getAll();
+
+  const result = await Promise.all(
+    orders.map(async ({ id, userId }) => {
+      const products = await productModel.getByOrderId(id);
+      const productsIds = products.map(({ id: productId }) => productId) as number[];
+      return { id, userId, products: productsIds };
+    }, []),
+  );
+  return result;
+};
+
 export default {
   create,
   getById,
+  getAll,
 };
