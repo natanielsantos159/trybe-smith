@@ -27,8 +27,18 @@ const updateProductOrder = async (productId: number, orderId: number) => {
     ) as [ResultSetHeader, FieldPacket[]];
 };
 
+const getByOrderId = async (orderId: number) => {
+  const [rows] = await connection
+    .execute(
+      'SELECT * FROM Trybesmith.Products WHERE orderId = ?', 
+      [orderId],
+    ) as [Product[], FieldPacket[]];
+  return rows;
+}; 
+
 export default {
   create,
   getAll,
   updateProductOrder,
+  getByOrderId,
 };
