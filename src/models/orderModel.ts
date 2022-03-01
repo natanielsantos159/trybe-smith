@@ -20,7 +20,17 @@ const getById = async (id: number) => {
   return rows[0];
 };
 
+const getAll = async () => {
+  const [rows] = await connection
+    .execute(
+      'SELECT * FROM Trybesmith.Orders',
+      [],
+    ) as [Order[], FieldPacket[]];
+  return rows;
+};
+
 export default {
   create,
   getById,
+  getAll,
 };
