@@ -2,6 +2,7 @@ import { Request, Response } from 'express';
 import jwt from 'jsonwebtoken';
 import userService from '../services/userService';
 import orderService from '../services/orderService';
+import Order from '../interfaces/Order';
 
 const create = async (req: Request, res: Response) => {
   const { products }: { products: number[] } = req.body;
@@ -33,7 +34,13 @@ const getById = async (req: Request, res: Response) => {
   }
 };
 
+const getAll = async (req: Request, res: Response) => {
+  const allOrders: Order[] = await orderService.getAll();
+  return res.status(200).json(allOrders);
+};
+
 export default {
   create,
   getById, 
+  getAll,
 };
