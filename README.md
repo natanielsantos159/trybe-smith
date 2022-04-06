@@ -91,7 +91,7 @@ Um token JWT deve ser gerado e retornado caso haja sucesso no login.
   GET /products
 ```
 - O cabeçalho da requisição deve conter um token JWT válido
-- Esse endpoint deve listar  todos os produtos e retorná-las na seguinte estrutura:
+- Esse endpoint retornará todos os produtos na seguinte estrutura:
 
 ```json
    [
@@ -147,7 +147,7 @@ Um token JWT deve ser gerado e retornado caso haja sucesso no login.
       }
     ```
 
-    
+---
 ## Feedback
 
 Se você tiver algum feedback, por favor entre em contato por meio de nathan.santos159@hotmail.com
